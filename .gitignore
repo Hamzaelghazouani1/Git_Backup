@@ -1,0 +1,3 @@
+# Ignore files
+.git
+.env

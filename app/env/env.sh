@@ -1,20 +1,11 @@
 #!/bin/bash
 
-hello_world() {
-    read -p "Enter your name : " name
-    echo "Hello, $name!"
-}
-
-run(){
-    echo "Welcome in BackupLik"
-}
-
 installGit(){
     if [ -x "$(command -v git)" ]; then
         echo "Git is already installed"
     else
         echo "Git is not installed"
-        echo "Do you want to install git ? (y/n)"
+        echo "Do you want to install git ? [y/n]"
         read response
         if [ $response == "y" ]; then
             sudo apt update
@@ -25,10 +16,12 @@ installGit(){
             exit 1
         fi
     fi
+}
 
+installXdg(){
     if [ ! -x "$(command -v xdg-open)" ]; then
         echo "xdg-open is not installed"
-        echo "Do you want to install xdg-open ? (y/n)"
+        echo "Do you want to install xdg-open ? [y/n]"
         read response
         if [ $response == "y" ]; then
             sudo apt install xdg-utils
@@ -37,55 +30,68 @@ installGit(){
             exit 1
         fi
     fi
+}
 
-    echo "Entre your github name : "
-    read name
+configGithub(){
+    if [ ! $USERNAME ]; then
+        echo "Entre your github name : "
+        read name
+        export USERNAME="$name"
+    fi
 
-    echo "Entre your github mail : "
-    read mail
+    if [ ! $EMAIL ]; then
+        echo "Entre your github email : "
+        read email
+        export EMAIL="$email"
+    fi
 
-    git config --global user.name $name
-    git config --global user.email $mail
+    git config --global user.name $USERNAME
+    git config --global user.email $EMAIL
 
-    echo "Git is installed"
+    echo "Git Config : "
     echo `git config --global --list`
 }
 
-sshConnect(){
+sshConnectGithub(){
     echo "Generate ssh key"
-    echo "Entre your github mail : "
-    read email
-    ssh-keygen -t rsa -b 4096 -C $email
-    cat /$USER/.ssh/id_rsa.pub
+    ssh-keygen -t rsa -b 4096 -C $EMAIL
+    cat /home/$USER/.ssh/id_rsa.pub
     echo "Add this key to your github account"
     xdg-open https://github.com/settings/keys
 
-    echo "Entre your github ssh key: "      
-    xdg-open https://github.com/settings/tokens
-    read key
-
-    git init
-    git remote -v
-
+    echo "Do you add your key to your github account ? [y/n]"
+    read response
+    if [ $response == "y" ]; then
+        echo "Connection established"
+        echo "Entre your github ssh key: "      
+        xdg-open https://github.com/settings/tokens
+    else
+        echo "Connection failed"
+    fi
 }
 
-fileBackup(){
-    echo "Entre Path of file : " #path relatif / absolute
-    read path
+pushToGithub(){
+    echo "Do you add your generated token to your github account ? [y/n]"
+    read result
+    if [ $result == "y" ]; then
+        read -p "Enter your token : " token
+        git init
+        git add .
+        git commit -m "Create project"
+        git branch -M main
+        git remote set-url origin "https://$token@github.com/$NAME/${PWD##*/}"
+        git push -u origin main
+    else
+        echo "Connection failed"
+    fi
 }
 
-connectToGithub(){
-    git config --global user.name name
-    git config --global user.email email
 
-    echo "Entre your github ssh key: "
-    read key
-    
-    git init
-    git remote -v
-
+run(){
+    echo "Welcome in BackupLik"
+    installGit
+    installXdg
+    configGithub
 }
 
-# hello_world
-# installGit
-sshConnect
+run

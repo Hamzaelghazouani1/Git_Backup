@@ -99,12 +99,12 @@ remoteGithub(){
 
     git init
     git remote -v
-    git remote add origin "https://$TOKEN@github.com/$NAME/${PWD##*/}"
+    # git remote add origin "https://$TOKEN@github.com/$NAME/${PWD##*/}"
 }
 
 pushToGithub(){
     remoteGithub
-    git add .
+    git add README.md *.crypt
     git commit -m "Update at $(date +'%d-%m-%Y %H:%M:%S')"
     git push -u origin main --force
 }

@@ -12,9 +12,9 @@ encrypt() {
     output_enc_file="$2"    # Path where the encrypted file will be saved
     password="$3"           # Password for encryption
 
-    # Check if zip file exists
+    # Check if the input file exists
     if [ ! -f "$zip_file" ]; then
-        echo "Error: Zip file '$zip_file' not found."
+        echo "Error: Input file does not exist."
         return 1
     fi
 
@@ -27,6 +27,7 @@ encrypt() {
 
     echo "Encryption completed. Encrypted file: $output_enc_file"
 }
+
 
 # Function to decrypt an encrypted file using AES
 decrypt() {

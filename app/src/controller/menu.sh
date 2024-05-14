@@ -1,11 +1,12 @@
 
 source ./app/src/view/menu.sh
 
+# Parse command-line arguments
+options(){
 if [[ $# -eq 0 ]]; then
-    display_help
+    echo "Error: Missing argument. Use -h or --help for usage."
     exit 0
 fi
-# Parse command-line arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
         -h|--help)
@@ -53,3 +54,4 @@ while [[ $# -gt 0 ]]; do
     esac
     shift
 done
+}

@@ -33,3 +33,5 @@ To start the backup automation, follow these simple steps:
 ## Contribution
 
 Contributions in the form of suggestions, bug reports, or feature requests are welcome! Feel free to open an issue or submit a pull request.
+
+![flux](https://github.com/Hamzaelghazouani1/Git_Backup/assets/91982044/b837c7ba-fc83-4b43-9f77-28a7ae2f21a5)

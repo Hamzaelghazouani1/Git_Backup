@@ -58,7 +58,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         -r|--rerord_historique)
         
-            cat ./app/log/data.log - tail -n 10
+            cat "./app/log/data.log" - tail -n 10
             ;; 
         # Add other options and their actions here
         *)

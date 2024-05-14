@@ -2,12 +2,11 @@ source ./app/src/environment/folder.sh
 
 
 getFolder(){
-    if [ ! "$(cat ./app/src/data/folder.bin)" ]; then
+    if [ ! "$(cat app/src/data/folder.bin)" ]; then
         echo "Enter the folder path: "
         read folder_path
         if [ ! -d "$folder_path" ]; then
             echo "The folder does not exist"
-            clear
             getFolder
         fi
         echo $folder_path
@@ -16,9 +15,8 @@ getFolder(){
 }
 
 
-
 filterByType(){
-    folder_path = $(cat ./app/src/data/folder.bin)
+    folder_path=$(cat app/src/data/folder.bin)
 
     # Create a directory to store the grouped files
     folderName="$folder_path/Downloads_$(date +'%d-%m-%Y')"

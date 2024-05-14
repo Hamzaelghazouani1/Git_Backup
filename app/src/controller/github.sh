@@ -81,7 +81,7 @@ sshConnectGithub(){
 
 }
 
-remoteGithub(){
+pushToGithub(){
     git config --global user.name "$(cat ./app/src/data/name.bin)"
     git config --global user.email "$(cat ./app/src/data/email.bin)"
 
@@ -89,6 +89,7 @@ remoteGithub(){
     TOKEN="$(cat ./app/src/data/token.bin)"
 
     cd /home/$USERNAME/Downloads/test
+    rm -rf .git
     touch README.md
     echo "# ${PWD##*/} : last update $(date)" > README.md
     # mkdir /home/$USER/Desktop/test
@@ -97,14 +98,12 @@ remoteGithub(){
     git config --global credential.helper store
     echo -e "https://$NAME:$TOKEN@github.com" > ~/.git-credentials
 
-    git init
     git remote -v
-    # git remote add origin "https://$TOKEN@github.com/$NAME/${PWD##*/}"
-}
+    git init
+    git add README.md
+    git remote add origin "https://$TOKEN@github.com/$NAME/${PWD##*/}"
 
-pushToGithub(){
-    remoteGithub
-    git add README.md *.crypt
+    git add *.crypt
     git commit -m "Update at $(date +'%d-%m-%Y %H:%M:%S')"
     git push -u origin main --force
 }

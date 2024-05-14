@@ -17,8 +17,8 @@ main(){
     fi
     zipFolder "$(cat ./app/src/data/folder.bin)" "test" >/dev/null 2>&1 &
     zip_pid=$!
-    checkConnection
     clear
+    checkConnection
     installGit >/dev/null 2>&1 &
     installXdg >/dev/null 2>&1 &
     if [ $zip_pid ]; then

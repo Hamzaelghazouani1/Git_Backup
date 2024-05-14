@@ -107,6 +107,12 @@ sshConnectGithub(){
 }
 
 pushToGithub(){
+    git config --global user.name $NAME
+    git config --global user.email $EMAIL
+
+    echo "Git Config : "
+    echo `git config --global --list`
+
     cd /home/$USERNAME/Desktop/test
     touch README.md
     echo "# ${PWD##*/}" >> README.md

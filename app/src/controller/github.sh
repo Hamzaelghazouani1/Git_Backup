@@ -85,25 +85,26 @@ remoteGithub(){
     git config --global user.name "$(cat ./app/src/data/name.bin)"
     git config --global user.email "$(cat ./app/src/data/email.bin)"
 
-    echo "Git Config : "
-    echo `git config --global --list`
-    cd /home/$USERNAME/Desktop/backup
+    NAME="$(cat ./app/src/data/name.bin)"
+    TOKEN="$(cat ./app/src/data/token.bin)"
+
+    cd /home/$USERNAME/Downloads/test
     touch README.md
-    echo "# ${PWD##*/} : last update $(date +'%d-%m-%Y')" > README.md
+    echo "# ${PWD##*/} : last update $(date)" > README.md
     # mkdir /home/$USER/Desktop/test
     git config --global init.defaultBranch main
     # Set up Git configuration to use the access token
     git config --global credential.helper store
-    echo -e "https://$(cat ./app/src/data/name.bin):$(cat ./app/src/data/token.bin)@github.com" > ~/.git-credentials
-    git add README.md
+    echo -e "https://$NAME:$TOKEN@github.com" > ~/.git-credentials
+
     git init
     git remote -v
+    git remote add origin "https://$TOKEN@github.com/$NAME/${PWD##*/}"
 }
 
 pushToGithub(){
-    cd /home/$USERNAME/Desktop/backup
     remoteGithub
     git add .
-    git commit -m "Initial commit"
+    git commit -m "Update at $(date +'%d-%m-%Y %H:%M:%S')"
     git push -u origin main --force
 }

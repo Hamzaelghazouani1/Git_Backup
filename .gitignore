@@ -1,3 +1,7 @@
 # Ignore files
 .git
 .env
+
+# Ignore directories
+app/src/data
+*.bin

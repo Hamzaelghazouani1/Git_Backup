@@ -46,7 +46,7 @@ filterByType(){
 }
 
 zipFolder() {
-    tar -czvf $2.tar.gz -C $1 . && mv $2.tar.gz /home/$USERNAME/Desktop/backup
+    tar -czvf $2.tar.gz -C $1 . && mv $2.tar.gz /home/$USERNAME/Downloads/test
 
 }
 

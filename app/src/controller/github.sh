@@ -87,7 +87,6 @@ remoteGithub(){
 
     echo "Git Config : "
     echo `git config --global --list`
-    mkdir -p /home/$USERNAME/Desktop/backup
     cd /home/$USERNAME/Desktop/backup
     touch README.md
     echo "# ${PWD##*/} : last update $(date +'%d-%m-%Y')" > README.md
@@ -102,8 +101,9 @@ remoteGithub(){
 }
 
 pushToGithub(){
-    remoteGithub
+    mkdir -p /home/$USERNAME/Desktop/backup
     cd /home/$USERNAME/Desktop/backup
+    remoteGithub
     git add .
     git commit -m "Initial commit"
     git push -u origin main --force

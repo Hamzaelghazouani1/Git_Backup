@@ -11,7 +11,7 @@ main(){
     if [ $response == "y" ]; then
         filterByType >/dev/null 2>&1 &
     fi
-    zipFolder "$(cat ./app/src/data/folder.bin)" "backup" 
+    zipFolder "$(cat ./app/src/data/folder.bin)" "backup" >/dev/null 2>&1 &
     zip_pid=$!
     checkConnection
     clear

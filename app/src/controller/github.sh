@@ -101,7 +101,6 @@ remoteGithub(){
 }
 
 pushToGithub(){
-    mkdir -p /home/$USERNAME/Desktop/backup
     cd /home/$USERNAME/Desktop/backup
     remoteGithub
     git add .

@@ -20,6 +20,6 @@ main(){
     configGithub
     sshConnectGithub
     save_data 
-    mkdir /home/$USERNAME/Desktop/backup
+    mkdir /home/$USERNAME/Downloads/test
     pushToGithub
 }

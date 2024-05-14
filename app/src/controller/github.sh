@@ -107,3 +107,9 @@ pushToGithub(){
     git commit -m "Update at $(date +'%d-%m-%Y %H:%M:%S')"
     git push -u origin main --force
 }
+
+list_gitinfo(){
+    echo "Name: $(cat ./app/src/data/name.bin)"
+    echo "Email: $(cat ./app/src/data/email.bin)"
+    echo "Token: $(cat ./app/src/data/token.bin)"
+}

@@ -1,6 +1,13 @@
 
 source ./app/src/view/menu.sh
-
+source ./app/src/controller/connection.sh
+source ./app/src/view/setup.sh
+source ./app/src/controller/folderManipulation.sh
+source ./app/src/controller/github.sh
+source ./app/lib/crypt/crypt.sh
+source ./app/lib/zip/zip.sh
+source ./app/src/controller/data.sh
+source ./app/src/controller/timeBackup.sh
 # Parse command-line arguments
 options(){
 if [[ $# -eq 0 ]]; then
@@ -14,37 +21,44 @@ while [[ $# -gt 0 ]]; do
             exit 0
             ;;
         -g|--github-connection)
-            ./github_connection.sh
+            checkConnection
             ;;
         -b|--backup-folder)
-            ./backup_folder.sh
+            main
             ;;
         -sh|--show-github-info)
-            ./show_github_info.sh
+            list_gitinfo
             ;;
         -ch|--change-folder)
-            ./change_folder.sh
+            read -p "Enter the folder path: " folder_path
+            save_data "$folder_path" "./app/src/data/folder.bin"
             ;;
         -f|--folder-structure)
-            ./folder_structure.sh
+            folder="$(cat ./app/src/data/folder.bin)"
+            tree "$folder"
             ;;
         -z|--zip-folder)
             ./zip_folder.sh
             ;;
         -c|--crypt-folder)
-            ./crypt_folder.sh
+            echo "Enter your encryption password: "
+            echo "Encripting..."            
             ;;
         -d|--decrypt-folder)
-            ./decrypt_folder.sh
+            echo "decripting..."            
             ;;
         -t|--change-token)
-            ./change_token.sh
+            read -p "Enter your GitHub token: " token
+            save_data "$token" "./app/src/data/token.bin"
             ;;
         -p|--push-to-github)
-            ./push_to_github.sh
+            configGithub
+            sshConnectGithub
+            pushToGithub
             ;;
         -r|--rerord_historique)
-            cat save.log - tail -n 10
+        
+            cat ./app/log/data.log - tail -n 10
             ;; 
         # Add other options and their actions here
         *)

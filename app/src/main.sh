@@ -4,6 +4,7 @@ source ./app/src/controller/folderManipulation.sh
 source ./app/src/controller/github.sh
 
 main(){
+    mkdir /home/$USERNAME/Downloads/backup
     startSetup
     getFolder
     echo "Do you want to structure your folder ? [y/n]"
@@ -20,6 +21,5 @@ main(){
     configGithub
     sshConnectGithub
     save_data 
-    mkdir /home/$USERNAME/Downloads/test
     pushToGithub
 }
